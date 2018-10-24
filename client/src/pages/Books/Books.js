@@ -57,29 +57,47 @@ class Books extends Component {
     return (
       <Container fluid>
         <Row>
-          <Col size="md-6">
+          <Col size="md-12">
             <Jumbotron>
-              <h1>What Books Should I Read?</h1>
+              <h1 class="text-center">
+                <strong>
+                  <i class="fa fa-newspaper-o"></i> New York Times Search</strong>
+              </h1>
             </Jumbotron>
+            <div class="card">
+          <div class="card-header">
+            <strong>
+              <i class="fa fa-list-alt"></i> Search Parameters</strong>
+          </div>
+          <div class="card-body">
             <form>
+            <div class="form-group">
+                <label for="search">Search Term:</label>
               <Input
                 value={this.state.title}
                 onChange={this.handleInputChange}
                 name="title"
                 placeholder="Title (required)"
               />
+              </div>
+              <div class="form-group">
+                <label for="start-year">Start Year (Optional):</label>
               <Input
                 value={this.state.author}
                 onChange={this.handleInputChange}
                 name="author"
                 placeholder="Author (required)"
               />
-              <TextArea
+              </div>
+              <div class="form-group">
+                <label for="end-year">End Year (Optional):</label>
+              <Input
                 value={this.state.synopsis}
                 onChange={this.handleInputChange}
                 name="synopsis"
                 placeholder="Synopsis (Optional)"
               />
+              </div>
               <FormBtn
                 disabled={!(this.state.author && this.state.title)}
                 onClick={this.handleFormSubmit}
@@ -87,8 +105,10 @@ class Books extends Component {
                 Submit Book
               </FormBtn>
             </form>
+            </div>
+            </div>
           </Col>
-          <Col size="md-6 sm-12">
+          <Col size="md-12 sm-12">
             <Jumbotron>
               <h1>Books On My List</h1>
             </Jumbotron>
@@ -106,8 +126,8 @@ class Books extends Component {
                 ))}
               </List>
             ) : (
-              <h3>No Results to Display</h3>
-            )}
+                <h3>No Results to Display</h3>
+              )}
           </Col>
         </Row>
       </Container>
