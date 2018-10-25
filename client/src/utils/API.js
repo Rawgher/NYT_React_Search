@@ -5,7 +5,7 @@ export default {
   articleSearch: function(title, startYear, endYear) {
     const queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?";
 
-    const search = "b9f91d369ff59547cd47b931d8cbc56b:0:74623931" + title;
+    let search = "b9f91d369ff59547cd47b931d8cbc56b:0:74623931" + title;
 
     if (startYear) {
       search += "&begin_date" + startYear + '0101';
@@ -19,27 +19,42 @@ export default {
       if (response.data.response.docs.length > 0) {
         let results = [];
 
-        
+        for (let i = 0; i < 5; i++) {
+          let doc = response.data.response.docs[i];
+          let article = {
+            title: doc.headline.main,
+            url: doc.web_url,
+            date: doc.pub_date.split("T")[0]
+          }
 
+          results.push(article);
+        }
+
+        return results
+
+      }
+
+      else {
+        return false
       }
     })
 
 
   },
-  // Gets all books
-  getBooks: function() {
-    return axios.get("/api/books");
+  // Gets the book with the given id
+  getSaved: function() {
+    return axios.get("/api/saved/");
   },
   // Gets the book with the given id
-  getBook: function(id) {
-    return axios.get("/api/books/" + id);
-  },
+  // getOne: function(id) {
+  //   return axios.get("/api/saved/" + id);
+  // },
   // Deletes the book with the given id
-  deleteBook: function(id) {
+  deleteArticle: function(id) {
     return axios.delete("/api/books/" + id);
   },
   // Saves a book to the database
-  saveBook: function(bookData) {
+  saveArticle: function(bookData) {
     return axios.post("/api/books", bookData);
   }
 };
