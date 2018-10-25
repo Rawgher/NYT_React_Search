@@ -19,12 +19,8 @@ export default {
       
   },
   // need to change this to articlesearch
-  getArticle: function() {
-    return axios.get("/api/saved/");
-  },
-  // Gets the book with the given id
-  getSaved: function(articleObj) {
-    return axios.get("/api/saved/", articleObj);
+  getArticle: function(id) {
+    return axios.get(`/api/saved/${id}`);
   },
   // Deletes the book with the given id
   deleteArticle: function(id) {
