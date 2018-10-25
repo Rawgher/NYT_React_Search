@@ -9,29 +9,36 @@ import { Input, TextArea, FormBtn } from "../../components/Form";
 
 class Books extends Component {
   state = {
-    books: [],
+    articles: [],
+    saved: [],
     title: "",
     startYear: "",
     endYear: ""
   };
 
   componentDidMount() {
-    this.loadBooks();
+    this.getSaved();
   }
 
-  loadBooks = () => {
-    API.getBooks()
+  getSaved = () => {
+    API.getArticle()
       .then(res =>
-        this.setState({ books: res.data, title: "", startYear: "", endYear: "" })
+        this.setState({ articles: res.data, title: "", startYear: "", endYear: "" })
       )
       .catch(err => console.log(err));
   };
 
-  deleteBook = id => {
-    API.deleteBook(id)
-      .then(res => this.loadBooks())
+  deleteArticle = id => {
+    API.deleteArticle(id)
+      .then(res => this.getSaved())
       .catch(err => console.log(err));
   };
+
+  saveArticle = id => {
+    API.saveArticle(id)
+    .then(res => this.getSaved())
+    .catch(err => console.log(err));
+  }
 
   handleInputChange = event => {
     const { name, value } = event.target;
@@ -42,13 +49,13 @@ class Books extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
-    if (this.state.title && this.state.startYear) {
-      API.saveBook({
+    if (this.state.title) {
+      API.saveArticle({
         title: this.state.title,
         startYear: this.state.startYear,
         endYear: this.state.endYear
       })
-        .then(res => this.loadBooks())
+        .then(res => this.getSaved())
         .catch(err => console.log(err));
     }
   };
@@ -96,10 +103,10 @@ class Books extends Component {
                     />
                   </div>
                   <FormBtn
-                    disabled={!(this.state.startYear && this.state.title)}
+                    disabled={!(this.state.title)}
                     onClick={this.handleFormSubmit}
                   >
-                    Submit Book
+                    Search
               </FormBtn>
                 </form>
               </div>
@@ -116,16 +123,16 @@ class Books extends Component {
                   <i className="fa fa-table"></i> Articles</strong>
               </div>
               <div className="card-body">
-              {this.state.books.length ? (
+              {this.state.articles.length ? (
                 <List>
-                  {this.state.books.map(book => (
-                    <ListItem key={book._id}>
-                      <Link to={"/books/" + book._id}>
+                  {this.state.articles.map(article => (
+                    <ListItem key={article._id}>
+                      <Link to={"/articles/" + article._id}>
                         <strong>
-                          {book.title} by {book.startYear}
+                          {article.title} by {article.startYear}
                         </strong>
                       </Link>
-                      <DeleteBtn onClick={() => this.deleteBook(book._id)} />
+                      <DeleteBtn onClick={() => this.deleteArticle(article._id)} />
                     </ListItem>
                   ))}
                 </List>
