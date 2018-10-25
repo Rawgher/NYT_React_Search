@@ -11,8 +11,8 @@ class Books extends Component {
   state = {
     books: [],
     title: "",
-    author: "",
-    synopsis: ""
+    startYear: "",
+    endYear: ""
   };
 
   componentDidMount() {
@@ -22,7 +22,7 @@ class Books extends Component {
   loadBooks = () => {
     API.getBooks()
       .then(res =>
-        this.setState({ books: res.data, title: "", author: "", synopsis: "" })
+        this.setState({ books: res.data, title: "", startYear: "", endYear: "" })
       )
       .catch(err => console.log(err));
   };
@@ -42,11 +42,11 @@ class Books extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
-    if (this.state.title && this.state.author) {
+    if (this.state.title && this.state.startYear) {
       API.saveBook({
         title: this.state.title,
-        author: this.state.author,
-        synopsis: this.state.synopsis
+        startYear: this.state.startYear,
+        endYear: this.state.endYear
       })
         .then(res => this.loadBooks())
         .catch(err => console.log(err));
@@ -59,80 +59,86 @@ class Books extends Component {
         <Row>
           <Col size="md-12">
             <Jumbotron>
-              <h1 class="text-center">
+              <h1 className="text-center">
                 <strong>
-                  <i class="fa fa-newspaper-o"></i> New York Times Search</strong>
+                  <i className="fa fa-newspaper-o"></i> New York Times Search</strong>
               </h1>
             </Jumbotron>
-            <div class="card">
-          <div class="card-header">
-            <strong>
-              <i class="fa fa-list-alt"></i> Search Parameters</strong>
-          </div>
-          <div class="card-body">
-            <form>
-            <div class="form-group">
-                <label for="search">Search Term:</label>
-              <Input
-                value={this.state.title}
-                onChange={this.handleInputChange}
-                name="title"
-                placeholder="Title (required)"
-              />
+            <div className="card">
+              <div className="card-header">
+                <strong>
+                  <i className="fa fa-list-alt"></i> Search Parameters</strong>
               </div>
-              <div class="form-group">
-                <label for="start-year">Start Year (Optional):</label>
-              <Input
-                value={this.state.author}
-                onChange={this.handleInputChange}
-                name="author"
-                placeholder="Author (required)"
-              />
-              </div>
-              <div class="form-group">
-                <label for="end-year">End Year (Optional):</label>
-              <Input
-                value={this.state.synopsis}
-                onChange={this.handleInputChange}
-                name="synopsis"
-                placeholder="Synopsis (Optional)"
-              />
-              </div>
-              <FormBtn
-                disabled={!(this.state.author && this.state.title)}
-                onClick={this.handleFormSubmit}
-              >
-                Submit Book
+              <div className="card-body">
+                <form>
+                  <div className="form-group">
+                    <label for="search">Search Term:</label>
+                    <Input
+                      value={this.state.title}
+                      onChange={this.handleInputChange}
+                      name="title"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label for="start-year">Start Year (Optional):</label>
+                    <Input
+                      value={this.state.startYear}
+                      onChange={this.handleInputChange}
+                      name="startYear"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label for="end-year">End Year (Optional):</label>
+                    <Input
+                      value={this.state.endYear}
+                      onChange={this.handleInputChange}
+                      name="endYear"
+                    />
+                  </div>
+                  <FormBtn
+                    disabled={!(this.state.startYear && this.state.title)}
+                    onClick={this.handleFormSubmit}
+                  >
+                    Submit Book
               </FormBtn>
-            </form>
-            </div>
+                </form>
+              </div>
             </div>
           </Col>
           <Col size="md-12 sm-12">
-            <Jumbotron>
-              <h1>Books On My List</h1>
+                        <Jumbotron>
+              <h1>Results</h1>
             </Jumbotron>
-            {this.state.books.length ? (
-              <List>
-                {this.state.books.map(book => (
-                  <ListItem key={book._id}>
-                    <Link to={"/books/" + book._id}>
-                      <strong>
-                        {book.title} by {book.author}
-                      </strong>
-                    </Link>
-                    <DeleteBtn onClick={() => this.deleteBook(book._id)} />
-                  </ListItem>
-                ))}
-              </List>
-            ) : (
-                <h3>No Results to Display</h3>
-              )}
+            <div className="card">
+
+              <div className="card-header">
+                <strong>
+                  <i className="fa fa-table"></i> Articles</strong>
+              </div>
+              <div className="card-body">
+              {this.state.books.length ? (
+                <List>
+                  {this.state.books.map(book => (
+                    <ListItem key={book._id}>
+                      <Link to={"/books/" + book._id}>
+                        <strong>
+                          {book.title} by {book.startYear}
+                        </strong>
+                      </Link>
+                      <DeleteBtn onClick={() => this.deleteBook(book._id)} />
+                    </ListItem>
+                  ))}
+                </List>
+              ) : (
+                  <h3>No Results to Display</h3>
+                )}
+                </div>
+                </div>
           </Col>
         </Row>
       </Container>
-    );
-  }
-}
-
-export default Books;
+        );
+      }
+    }
+    
+    export default Books;

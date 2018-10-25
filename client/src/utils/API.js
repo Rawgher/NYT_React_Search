@@ -1,6 +1,31 @@
 import axios from "axios";
 
 export default {
+
+  articleSearch: function(title, startYear, endYear) {
+    const queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?";
+
+    const search = "b9f91d369ff59547cd47b931d8cbc56b:0:74623931" + title;
+
+    if (startYear) {
+      search += "&begin_date" + startYear + '0101';
+    }
+
+    if (endYear) {
+      search += "&end_date" + endYear + "1231";
+    }
+
+    return axios.get(queryURL + search).then(function(response) {
+      if (response.data.response.docs.length > 0) {
+        let results = [];
+
+        
+
+      }
+    })
+
+
+  },
   // Gets all books
   getBooks: function() {
     return axios.get("/api/books");
