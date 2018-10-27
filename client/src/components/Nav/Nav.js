@@ -5,6 +5,9 @@ const Nav = () => (
     <a className="navbar-brand" href="/">
       NYT Search
     </a>
+    <a className="navbar-brand" href="/articles">
+      Saved Articles
+    </a>
   </nav>
 );
 

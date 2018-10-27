@@ -28,7 +28,8 @@ class Books extends Component {
 
   grabArticles = search => {
     axios.get(search)
-    .then(res => API.parseRes(res))
+    .then(res => 
+      API.parseRes(res))
     .then(articles => this.setState({ articles }))
     .catch(err => console.log(err));
   }
@@ -123,7 +124,7 @@ class Books extends Component {
             </Col>
           </Row>
           <Row>
-          <Col size="md-6 sm-12">
+          <Col size="md-12 sm-12">
           <div  style={styles.padTop}>
             <div className="card">
 
@@ -140,7 +141,7 @@ class Books extends Component {
             </div>
             </div>
           </Col>
-          <Col size="md-6 sm-12">
+          {/* <Col size="md-6 sm-12">
           <div  style={styles.padTop}>
             <div className="card">
 
@@ -157,7 +158,7 @@ class Books extends Component {
               </div>
             </div>
             </div>
-          </Col>
+          </Col> */}
         </Row>
       </Container>
     );

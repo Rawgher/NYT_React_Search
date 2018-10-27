@@ -11,7 +11,7 @@ class Article extends Component {
         const { articles } = this.props;
         return articles.map((a, id) => (
             <div key={id}>
-                <h3>{a.title}</h3>
+                <a href={a.url}><h3>{a.title}</h3></a>
                 <Btn
                     color="primary"
                     variant="raised"

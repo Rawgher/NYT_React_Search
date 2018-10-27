@@ -19,12 +19,14 @@ export default {
   },
   parseRes: function(response) {
     const docs = response.data.response.docs;
+    console.log(docs)
     const articles = [];
     docs.forEach(a => {
       articles.push({
         title: a.headline.main,
         date: a.pub_date,
-        url: a.web_url
+        url: a.web_url,
+        snippet: a.snippet
       })
     })
     return articles;
