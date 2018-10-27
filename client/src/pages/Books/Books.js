@@ -40,6 +40,8 @@ class Books extends Component {
     }).then(res => {
       let articles = [...this.state.saved]
       this.setState({saved: articles})
+    }).then(function() {
+      window.location.reload();
     })
   };
 
