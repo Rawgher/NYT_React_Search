@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import DeleteBtn from "../../components/DeleteBtn";
+// import DeleteBtn from "../../components/DeleteBtn";
 import Jumbotron from "../../components/Jumbotron";
 import API from "../../utils/API";
+import Articles from "../../components/Articles"
 import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../../components/Grid";
 import { List, ListItem } from "../../components/List";
-import { Input, TextArea, FormBtn } from "../../components/Form";
+import { Input, FormBtn } from "../../components/Form";
 
 class Books extends Component {
   state = {
@@ -49,15 +50,16 @@ class Books extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
-    if (this.state.title) {
-      API.saveArticle({
+    // if (this.state.title) {
+      API.articleSearch({
         title: this.state.title,
         startYear: this.state.startYear,
         endYear: this.state.endYear
       })
-        .then(res => this.getSaved())
+        .then(response => API.parseArticle(response))
+        .then(articles => this.setState({ articles }))
         .catch(err => console.log(err));
-    }
+    // }
   };
 
   render() {
@@ -123,22 +125,10 @@ class Books extends Component {
                   <i className="fa fa-table"></i> Articles</strong>
               </div>
               <div className="card-body">
-              {this.state.articles.length ? (
-                <List>
-                  {this.state.articles.map(article => (
-                    <ListItem key={article._id}>
-                      <Link to={"/api/saved/" + article._id}>
-                        <strong>
-                          {article.title} by {article.startYear}
-                        </strong>
-                      </Link>
-                      <DeleteBtn onClick={() => this.deleteArticle(article._id)} />
-                    </ListItem>
-                  ))}
-                </List>
-              ) : (
-                  <h3>No Results to Display</h3>
-                )}
+                <Articles
+                articles = {this.state.articles}
+                saveArticle = {this.state.saved}
+                /> 
                 </div>
                 </div>
           </Col>
