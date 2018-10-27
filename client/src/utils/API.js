@@ -1,5 +1,3 @@
-import axios from "axios";
-
 export default {
 
   articleSearch: function(title, startYear, endYear) {
@@ -16,7 +14,7 @@ export default {
     }
 
     console.log(queryURL)
-    return axios.get(queryURL)
+    return queryURL
       
   },
   parseRes: function(response) {

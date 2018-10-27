@@ -11,14 +11,14 @@ module.exports = {
   },
   create: function(req, res) {
     db.Article
-      .create(req.body)
+      .create(req.query)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   delete: function(req, res) {
     db.Article
-      .findById({ _id: req.params.id })
-      .then(dbModel => dbModel.remove())
+      .findById({ _id: req.query.id })
+      .then(dbModel => dbModel.delete())
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   }

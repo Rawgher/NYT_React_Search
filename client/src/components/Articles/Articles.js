@@ -3,8 +3,8 @@ import React, { Component } from 'react'
 import Btn from '@material-ui/core/Button'
 
 class Article extends Component {
-    clicked = index => {
-        this.props.saved ? this.props.deleteArticle(index) : this.props.saveArticle(index);
+    clicked = id => {
+        this.props.saved ? this.props.deleteArticle(id) : this.props.saveArticle(id);
     }
 
     showArticles = () => {
@@ -15,7 +15,7 @@ class Article extends Component {
                 <Btn
                     color="primary"
                     variant="raised"
-                    onCLick={
+                    onClick={
                         this.props.saved ? this.clicked.bind(this, id) : this.clicked.bind(this, id)
                     }>
                     {this.props.saved ? 'Delete' : 'Save'}

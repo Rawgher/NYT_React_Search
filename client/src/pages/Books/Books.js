@@ -38,7 +38,7 @@ class Books extends Component {
     axios.delete('/api/articles', {
       params: { id: this.state.saved[id]._id}
     }).then(res => {
-      let articles = {...this.state.saved}
+      let articles = [...this.state.saved]
       this.setState({saved: articles})
     })
   };
@@ -126,7 +126,7 @@ class Books extends Component {
               <div className="card-body">
                 <Articles
                   articles={this.state.articles}
-                  saveArticle={this.state.saveArticle}
+                  saveArticle={this.saveArticle}
                 />
               </div>
             </div>
@@ -144,7 +144,7 @@ class Books extends Component {
               <div className="card-body">
                 <Articles
                   articles={this.state.saved}
-                  removeArticle={this.state.deleteArticle}
+                  deleteArticle={this.deleteArticle}
                   saved
                 />
               </div>
