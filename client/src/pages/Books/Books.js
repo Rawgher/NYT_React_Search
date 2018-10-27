@@ -5,7 +5,13 @@ import API from "../../utils/API";
 import Articles from "../../components/Articles"
 import { Col, Row, Container } from "../../components/Grid";
 import { Input } from "../../components/Form";
-import axios from 'axios'
+import axios from 'axios';
+
+const styles = {
+  padTop: {
+    paddingTop: '30px'
+  }
+}
 
 class Books extends Component {
   state = {
@@ -65,7 +71,7 @@ class Books extends Component {
     return (
       <Container fluid>
         <Row>
-          <Col size="md-12">
+          <Col size="md-12 sm-12">
             <Jumbotron>
               <h1 className="text-center">
                 <strong>
@@ -114,11 +120,11 @@ class Books extends Component {
                 </form>
               </div>
             </div>
-          </Col>
-          <Col size="md-12 sm-12">
-            <Jumbotron>
-              <h1>Results</h1>
-            </Jumbotron>
+            </Col>
+          </Row>
+          <Row>
+          <Col size="md-6 sm-12">
+          <div  style={styles.padTop}>
             <div className="card">
 
               <div className="card-header">
@@ -132,11 +138,10 @@ class Books extends Component {
                 />
               </div>
             </div>
+            </div>
           </Col>
-          <Col size="md-12 sm-12">
-            <Jumbotron>
-              <h1>Saved Articles</h1>
-            </Jumbotron>
+          <Col size="md-6 sm-12">
+          <div  style={styles.padTop}>
             <div className="card">
 
               <div className="card-header">
@@ -150,6 +155,7 @@ class Books extends Component {
                   saved
                 />
               </div>
+            </div>
             </div>
           </Col>
         </Row>
