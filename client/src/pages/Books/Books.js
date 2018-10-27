@@ -5,6 +5,7 @@ import API from "../../utils/API";
 import Articles from "../../components/Articles"
 import { Col, Row, Container } from "../../components/Grid";
 import { Input } from "../../components/Form";
+import axios from 'axios'
 
 class Books extends Component {
   state = {
@@ -16,29 +17,33 @@ class Books extends Component {
   };
 
   componentDidMount() {
-    this.getSaved();
+    axios('/api/articles').then(res => res.data).then(res => this.setState({ saved: res}))
   }
 
-  getSaved = () => {
-    API.getArticle()
-      .then(res =>
-        this.setState({ articles: res.data, title: "", startYear: "", endYear: "" })
-      )
-      .catch(err => console.log(err));
-  };
-
-  deleteArticle = id => {
-    API.deleteArticle(id)
-      .then(res => this.getSaved())
-      .catch(err => console.log(err));
-  };
+  grabArticles = search => {
+    axios.get(search)
+    .then(res => API.parseRes(res))
+    .then(articles => this.setState({ articles }))
+    .catch(err => console.log(err));
+  }
 
   saveArticle = id => {
-    API.saveArticle(id)
-      .then(res => this.getSaved())
-      .catch(err => console.log(err));
+    axios.post('/api/articles', this.state.articles[id]).then(res => res.data).then(res => 
+      this.setState({
+        saved: [res, ...this.state.saved]
+      })).catch(err => console.log(err))
   }
 
+  deleteArticle = id => {
+    axios.delete('/api/articles', {
+      params: { id: this.state.saved[id]._id}
+    }).then(res => {
+      let articles = {...this.state.saved}
+      this.setState({saved: articles})
+    })
+  };
+
+  
   handleInputChange = event => {
     const { name, value } = event.target;
     this.setState({
@@ -48,16 +53,10 @@ class Books extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
-    // if (this.state.title) {
-    API.articleSearch({
-      title: this.state.title,
-      startYear: this.state.startYear,
-      endYear: this.state.endYear
-    })
-      .then(response => API.parseArticle(response))
-      .then(articles => this.setState({ articles }))
-      .catch(err => console.log(err));
-    // }
+
+    const {title, startYear, endYear} = this.state;
+    const search = API.articleSearch(title, startYear, endYear)
+    this.grabArticles(search)
   };
 
   render() {
@@ -127,7 +126,26 @@ class Books extends Component {
               <div className="card-body">
                 <Articles
                   articles={this.state.articles}
-                  saveArticle={this.state.saved}
+                  saveArticle={this.state.saveArticle}
+                />
+              </div>
+            </div>
+          </Col>
+          <Col size="md-12 sm-12">
+            <Jumbotron>
+              <h1>Saved Articles</h1>
+            </Jumbotron>
+            <div className="card">
+
+              <div className="card-header">
+                <strong>
+                  <i className="fa fa-table"></i> Saved Articles</strong>
+              </div>
+              <div className="card-body">
+                <Articles
+                  articles={this.state.saved}
+                  removeArticle={this.state.deleteArticle}
+                  saved
                 />
               </div>
             </div>

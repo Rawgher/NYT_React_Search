@@ -19,7 +19,7 @@ export default {
     return axios.get(queryURL + search)
       
   },
-  parseArticle: function(response) {
+  parseRes: function(response) {
     const docs = response.data.response.docs;
     const articles = [];
     docs.forEach(a => {
@@ -31,17 +31,5 @@ export default {
     })
     return articles;
 
-  },
-  // need to change this to articlesearch
-  getArticle: function(id) {
-    return axios.get("/api/saved/" + id);
-  },
-  // Deletes the book with the given id
-  deleteArticle: function(id) {
-    return axios.delete("/api/saved/" + id);
-  },
-  // Saves a book to the database
-  saveArticle: function(article) {
-    return axios.post("/api/saved", article);
   }
 };
