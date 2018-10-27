@@ -1,12 +1,10 @@
 import React, { Component } from "react";
-// import DeleteBtn from "../../components/DeleteBtn";
 import Jumbotron from "../../components/Jumbotron";
+import Btn from '@material-ui/core/Button'
 import API from "../../utils/API";
 import Articles from "../../components/Articles"
-import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../../components/Grid";
-import { List, ListItem } from "../../components/List";
-import { Input, FormBtn } from "../../components/Form";
+import { Input } from "../../components/Form";
 
 class Books extends Component {
   state = {
@@ -37,8 +35,8 @@ class Books extends Component {
 
   saveArticle = id => {
     API.saveArticle(id)
-    .then(res => this.getSaved())
-    .catch(err => console.log(err));
+      .then(res => this.getSaved())
+      .catch(err => console.log(err));
   }
 
   handleInputChange = event => {
@@ -51,14 +49,14 @@ class Books extends Component {
   handleFormSubmit = event => {
     event.preventDefault();
     // if (this.state.title) {
-      API.articleSearch({
-        title: this.state.title,
-        startYear: this.state.startYear,
-        endYear: this.state.endYear
-      })
-        .then(response => API.parseArticle(response))
-        .then(articles => this.setState({ articles }))
-        .catch(err => console.log(err));
+    API.articleSearch({
+      title: this.state.title,
+      startYear: this.state.startYear,
+      endYear: this.state.endYear
+    })
+      .then(response => API.parseArticle(response))
+      .then(articles => this.setState({ articles }))
+      .catch(err => console.log(err));
     // }
   };
 
@@ -104,18 +102,20 @@ class Books extends Component {
                       name="endYear"
                     />
                   </div>
-                  <FormBtn
+                  <Btn
+                    color="primary"
+                    variant="raised"
                     disabled={!(this.state.title)}
                     onClick={this.handleFormSubmit}
                   >
                     Search
-              </FormBtn>
+              </Btn>
                 </form>
               </div>
             </div>
           </Col>
           <Col size="md-12 sm-12">
-                        <Jumbotron>
+            <Jumbotron>
               <h1>Results</h1>
             </Jumbotron>
             <div className="card">
@@ -126,16 +126,16 @@ class Books extends Component {
               </div>
               <div className="card-body">
                 <Articles
-                articles = {this.state.articles}
-                saveArticle = {this.state.saved}
-                /> 
-                </div>
-                </div>
+                  articles={this.state.articles}
+                  saveArticle={this.state.saved}
+                />
+              </div>
+            </div>
           </Col>
         </Row>
       </Container>
-        );
-      }
-    }
-    
-    export default Books;
+    );
+  }
+}
+
+export default Books;
