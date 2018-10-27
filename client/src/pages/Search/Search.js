@@ -5,6 +5,7 @@ import API from "../../utils/API";
 import Articles from "../../components/Articles"
 import { Col, Row, Container } from "../../components/Grid";
 import { Input } from "../../components/Form";
+import Footer from "../../components/Footer";
 import axios from 'axios';
 
 const styles = {
@@ -13,7 +14,7 @@ const styles = {
   }
 }
 
-class Books extends Component {
+class Search extends Component {
   state = {
     articles: [],
     saved: [],
@@ -23,19 +24,19 @@ class Books extends Component {
   };
 
   componentDidMount() {
-    axios('/api/articles').then(res => res.data).then(res => this.setState({ saved: res}))
+    axios('/api/articles').then(res => res.data).then(res => this.setState({ saved: res }))
   }
 
   grabArticles = search => {
     axios.get(search)
-    .then(res => 
-      API.parseRes(res))
-    .then(articles => this.setState({ articles }))
-    .catch(err => console.log(err));
+      .then(res =>
+        API.parseRes(res))
+      .then(articles => this.setState({ articles }))
+      .catch(err => console.log(err));
   }
 
   saveArticle = id => {
-    axios.post('/api/articles', this.state.articles[id]).then(res => res.data).then(res => 
+    axios.post('/api/articles', this.state.articles[id]).then(res => res.data).then(res =>
       this.setState({
         saved: [res, ...this.state.saved]
       })).catch(err => console.log(err))
@@ -43,16 +44,16 @@ class Books extends Component {
 
   deleteArticle = id => {
     axios.delete('/api/articles', {
-      params: { id: this.state.saved[id]._id}
+      params: { id: this.state.saved[id]._id }
     }).then(res => {
       let articles = [...this.state.saved]
-      this.setState({saved: articles})
-    }).then(function() {
+      this.setState({ saved: articles })
+    }).then(function () {
       window.location.reload();
     })
   };
 
-  
+
   handleInputChange = event => {
     const { name, value } = event.target;
     this.setState({
@@ -63,13 +64,14 @@ class Books extends Component {
   handleFormSubmit = event => {
     event.preventDefault();
 
-    const {title, startYear, endYear} = this.state;
+    const { title, startYear, endYear } = this.state;
     const search = API.articleSearch(title, startYear, endYear)
     this.grabArticles(search)
   };
 
   render() {
     return (
+      <div>
       <Container fluid>
         <Row>
           <Col size="md-12 sm-12">
@@ -80,7 +82,7 @@ class Books extends Component {
               </h1>
             </Jumbotron>
             <div className="card">
-              <div className="card-header">
+              <div style={{ color: "white" }} className="card-header bg-primary">
                 <strong>
                   <i className="fa fa-list-alt"></i> Search Parameters</strong>
               </div>
@@ -111,7 +113,7 @@ class Books extends Component {
                     />
                   </div>
                   <Btn
-                    color="primary"
+                    color="secondary"
                     variant="raised"
                     disabled={!(this.state.title)}
                     onClick={this.handleFormSubmit}
@@ -121,24 +123,24 @@ class Books extends Component {
                 </form>
               </div>
             </div>
-            </Col>
-          </Row>
-          <Row>
+          </Col>
+        </Row>
+        <Row>
           <Col size="md-12 sm-12">
-          <div  style={styles.padTop}>
-            <div className="card">
+            <div style={styles.padTop}>
+              <div className="card">
 
-              <div className="card-header">
-                <strong>
-                  <i className="fa fa-table"></i> Articles</strong>
+                <div style={{ color: "white" }} className="card-header bg-primary">
+                  <strong>
+                    <i className="fa fa-table"></i> Articles</strong>
+                </div>
+                <div className="card-body">
+                  <Articles
+                    articles={this.state.articles}
+                    saveArticle={this.saveArticle}
+                  />
+                </div>
               </div>
-              <div className="card-body">
-                <Articles
-                  articles={this.state.articles}
-                  saveArticle={this.saveArticle}
-                />
-              </div>
-            </div>
             </div>
           </Col>
           {/* <Col size="md-6 sm-12">
@@ -160,9 +162,12 @@ class Books extends Component {
             </div>
           </Col> */}
         </Row>
+
       </Container>
+      <Footer />
+      </div>
     );
   }
 }
 
-export default Books;
+export default Search;

@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../../components/Grid";
 import Jumbotron from "../../components/Jumbotron";
 import Articles from "../../components/Articles"
-// import API from "../../utils/API";
+import Footer from "../../components/Footer";
 import axios from 'axios'
 
-class Detail extends Component {
+class Saved extends Component {
   state = {
     articles: [],
     saved: []
@@ -29,6 +29,7 @@ class Detail extends Component {
 
   render() {
     return (
+      <div>
       <Container fluid>
         <Row>
           <Col size="md-12">
@@ -43,7 +44,7 @@ class Detail extends Component {
           <Col size="md-12">
             <div className="card">
 
-              <div className="card-header">
+              <div style={{ color: "white" }} className="card-header bg-primary">
                 <strong>
                   <i className="fa fa-table"></i> Saved Articles</strong>
               </div>
@@ -63,8 +64,12 @@ class Detail extends Component {
           </Col>
         </Row>
       </Container>
+      <div className="fixed-bottom">
+      <Footer />
+      </div>
+      </div>
     );
   }
 }
 
-export default Detail;
+export default Saved;

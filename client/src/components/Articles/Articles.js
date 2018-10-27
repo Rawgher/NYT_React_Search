@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import "./Articles.css"
 
 import Btn from '@material-ui/core/Button'
 
@@ -10,11 +11,11 @@ class Article extends Component {
     showArticles = () => {
         const { articles } = this.props;
         return articles.map((a, id) => (
-            <div key={id}>
-                <a href={a.url}><h3>{a.title}</h3></a>
+            <div key={id} className="spacer">
+                <a href={a.url} className="black"><h3>{a.title}</h3></a>
                 <h6>{a.snippet}</h6>
                 <Btn
-                    color="primary"
+                    color="secondary"
                     variant="raised"
                     onClick={
                         this.props.saved ? this.clicked.bind(this, id) : this.clicked.bind(this, id)
