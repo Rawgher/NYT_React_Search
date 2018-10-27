@@ -13,16 +13,16 @@ class Detail extends Component {
   };
 
   componentDidMount() {
-    axios('/api/articles').then(res => res.data).then(res => this.setState({ saved: res}))
+    axios('/api/articles').then(res => res.data).then(res => this.setState({ saved: res }))
   }
 
   deleteArticle = id => {
     axios.delete('/api/articles', {
-      params: { id: this.state.saved[id]._id}
+      params: { id: this.state.saved[id]._id }
     }).then(res => {
       let articles = [...this.state.saved]
-      this.setState({saved: articles})
-    }).then(function() {
+      this.setState({ saved: articles })
+    }).then(function () {
       window.location.reload();
     })
   };
@@ -34,27 +34,27 @@ class Detail extends Component {
           <Col size="md-12">
             <Jumbotron>
               <h1>
-               Saved Articles
+                Saved Articles
               </h1>
             </Jumbotron>
           </Col>
         </Row>
         <Row>
           <Col size="md-12">
-          <div className="card">
+            <div className="card">
 
-<div className="card-header">
-  <strong>
-    <i className="fa fa-table"></i> Saved Articles</strong>
-</div>
-<div className="card-body">
-  <Articles
-    articles={this.state.saved}
-    deleteArticle={this.deleteArticle}
-    saved
-  />
-</div>
-</div>
+              <div className="card-header">
+                <strong>
+                  <i className="fa fa-table"></i> Saved Articles</strong>
+              </div>
+              <div className="card-body">
+                <Articles
+                  articles={this.state.saved}
+                  deleteArticle={this.deleteArticle}
+                  saved
+                />
+              </div>
+            </div>
           </Col>
         </Row>
         <Row>

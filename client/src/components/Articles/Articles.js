@@ -12,6 +12,7 @@ class Article extends Component {
         return articles.map((a, id) => (
             <div key={id}>
                 <a href={a.url}><h3>{a.title}</h3></a>
+                <h6>{a.snippet}</h6>
                 <Btn
                     color="primary"
                     variant="raised"
