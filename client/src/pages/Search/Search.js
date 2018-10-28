@@ -106,7 +106,7 @@ class Search extends Component {
                     </div>
                     <Btn
                       color="secondary"
-                      variant="raised"
+                      variant="contained"
                       disabled={!(this.state.title)}
                       onClick={this.handleFormSubmit}
                     >
