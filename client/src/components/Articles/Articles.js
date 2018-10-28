@@ -12,7 +12,7 @@ class Article extends Component {
         const { articles } = this.props;
         return articles.map((a, id) => (
             <div key={id} className="spacer">
-                <a href={a.url} className="black"><h3>{a.title}</h3></a>
+                <a href={a.url}><h3>{a.title}</h3></a>
                 <h6>{a.snippet}</h6>
                 <Btn
                     color="secondary"

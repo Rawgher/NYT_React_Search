@@ -1,5 +1,6 @@
 export default {
 
+  // function that creates the search query based on what it is given from the input
   articleSearch: function(title, startYear, endYear) {
     let queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?";
 
@@ -17,6 +18,8 @@ export default {
     return queryURL
       
   },
+  
+  // function that parses through the response data that is given from the function above
   parseRes: function(response) {
     const docs = response.data.response.docs;
     console.log(docs)
@@ -30,6 +33,5 @@ export default {
       })
     })
     return articles;
-
   }
 };
