@@ -1,14 +1,15 @@
 import React from "react";
-import "./Nav.css"
+import { Link } from "react-router-dom";
+import "./Nav.css";
 
 const Nav = () => (
   <nav className="navbar navbar-expand-lg navbar-dark bg-primary marginBot">
-    <a className="navbar-brand" href="/">
+    <Link to="/" className="navbar-brand">
       NYT Search
-    </a>
-    <a className="navbar-brand" href="/saved">
+    </Link>
+    <Link to="/saved" className="navbar-brand">
       Saved Articles
-    </a>
+    </Link>
   </nav>
 );
 
