@@ -2,7 +2,7 @@
 
 A tool built which allows users to search the New York Times for articles related to their search parameter. They can also set which year they would like the results to come from. If nothing is entered, the most recent articles will appear below the search form. Clicking an articles title will take the user to the actual article page. The user can save articles and view them on the "saved articles" page. The user can then delete the article from the mongo database if they would like to.
 
-You can visit the deployed project [here](https://peaceful-headland-96719.herokuapp.com/)
+You can visit the deployed project [here](https://peaceful-headland-96719.herokuapp.com/).
 
 ## Screenshots
 
